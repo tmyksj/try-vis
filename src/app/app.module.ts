@@ -1,8 +1,8 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
+import { AppComponent } from "./components/app/app.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 
 @NgModule({
@@ -14,8 +14,10 @@ import { PageHomeComponent } from "./components/page-home/page-home.component";
     PageHomeComponent,
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
+    RouterModule.forRoot([
+      { path: '', component: PageHomeComponent },
+    ]),
   ],
   providers: [
   ],
