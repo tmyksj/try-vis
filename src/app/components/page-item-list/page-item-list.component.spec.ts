@@ -1,16 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PageItemListComponent } from './page-item-list.component';
+import { PageItemListComponent } from "./page-item-list.component";
 
-describe('PageItemListComponent', () => {
+describe("PageItemListComponent", () => {
+
   let component: PageItemListComponent;
   let fixture: ComponentFixture<PageItemListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageItemListComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        PageItemListComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +21,8 @@ describe('PageItemListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
+
 });
