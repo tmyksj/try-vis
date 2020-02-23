@@ -79,13 +79,13 @@ export class Db {
           self.db.table(tableName).put(dto2db(dto))
         ).pipe(mergeMap(this.findById), map((value: T | null): T => {
           if (value === null) {
-            throw "cannot found saved data";
+            throw new Error("cannot found saved data");
           }
           return value;
         }));
       }
 
-    };
+    }();
   }
 
 }
