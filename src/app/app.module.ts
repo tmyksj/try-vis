@@ -1,5 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
 import { AppComponent } from "./components/app/app.component";
@@ -18,6 +19,7 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
     PageItemListComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     RouterModule.forRoot([
       { path: "", component: PageHomeComponent },
