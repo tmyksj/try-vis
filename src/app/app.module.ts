@@ -5,6 +5,7 @@ import { RouterModule } from "@angular/router";
 import { AppComponent } from "./components/app/app.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from './components/page-item/page-item.component';
+import { PageItemListComponent } from './components/page-item-list/page-item-list.component';
 
 @NgModule({
   bootstrap: [
@@ -14,6 +15,7 @@ import { PageItemComponent } from './components/page-item/page-item.component';
     AppComponent,
     PageHomeComponent,
     PageItemComponent,
+    PageItemListComponent,
   ],
   imports: [
     BrowserModule,
