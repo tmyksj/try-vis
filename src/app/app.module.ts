@@ -21,6 +21,8 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
     BrowserModule,
     RouterModule.forRoot([
       { path: "", component: PageHomeComponent },
+      { path: "item/:id", component: PageItemComponent },
+      { path: "item-list", component: PageItemListComponent },
     ]),
   ],
   providers: [
