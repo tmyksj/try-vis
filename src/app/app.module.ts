@@ -1,8 +1,11 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
+import { AppComponent } from "./components/app/app.component";
+import { PageHomeComponent } from "./components/page-home/page-home.component";
+import { PageItemComponent } from "./components/page-item/page-item.component";
+import { PageItemListComponent } from "./components/page-item-list/page-item-list.component";
 
 @NgModule({
   bootstrap: [
@@ -10,10 +13,17 @@ import { AppComponent } from "./app.component";
   ],
   declarations: [
     AppComponent,
+    PageHomeComponent,
+    PageItemComponent,
+    PageItemListComponent,
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
+    RouterModule.forRoot([
+      { path: "", component: PageHomeComponent },
+      { path: "item/:id", component: PageItemComponent },
+      { path: "item-list", component: PageItemListComponent },
+    ]),
   ],
   providers: [
   ],
