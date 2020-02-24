@@ -14,6 +14,7 @@ import { LayoutMainComponent } from "./components/layout-main/layout-main.compon
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from "./components/page-item/page-item.component";
 import { PageItemListComponent } from "./components/page-item-list/page-item-list.component";
+import { PageItemEditComponent } from './components/page-item-edit/page-item-edit.component';
 
 @NgModule({
   bootstrap: [
@@ -25,6 +26,7 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
     PageHomeComponent,
     PageItemComponent,
     PageItemListComponent,
+    PageItemEditComponent,
   ],
   imports: [
     BrowserAnimationsModule,
