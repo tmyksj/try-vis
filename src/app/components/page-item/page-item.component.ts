@@ -39,7 +39,7 @@ export class PageItemComponent implements OnInit {
     this.isLoaded = false;
 
     const itemObservable: Observable<ItemDto> = this.route.paramMap.pipe(switchMap((params: ParamMap): Observable<ItemDto> => {
-      return this.itemDomain.item(parseInt(params.get("id")));
+      return this.itemDomain.item(parseInt(params.get("id"), 10));
     }));
 
     combineLatest([
@@ -59,7 +59,7 @@ export class PageItemComponent implements OnInit {
     });
   }
 
-  private onClickLog(itemLogType: ItemLogTypeDto): void {
+  public onClickLog(itemLogType: ItemLogTypeDto): void {
     this.itemDomain.saveLog(this.item, itemLogType).subscribe((): void => {
       this.router.navigateByUrl("/");
     });
