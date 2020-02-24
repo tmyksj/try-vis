@@ -7,6 +7,8 @@ import { AppComponent } from "./components/app/app.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from "./components/page-item/page-item.component";
 import { PageItemListComponent } from "./components/page-item-list/page-item-list.component";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   bootstrap: [
@@ -26,6 +28,7 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
       { path: "item/:id", component: PageItemComponent },
       { path: "item-list", component: PageItemListComponent },
     ]),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
   ],
