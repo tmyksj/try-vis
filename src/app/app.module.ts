@@ -2,9 +2,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule } from "@angular/service-worker";
 
-import { environment } from '../environments/environment';
+import { environment } from "../environments/environment";
 import { AppComponent } from "./components/app/app.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from "./components/page-item/page-item.component";
