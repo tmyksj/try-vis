@@ -1,0 +1,24 @@
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+main {
+  padding: 4rem 0;
+}
+
+nav {
+  background: #ffffff;
+  border-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+
+  a {
+    width: 100%;
+  }
+}

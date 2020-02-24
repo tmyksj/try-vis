@@ -1,1 +1,16 @@
-<p>layout-main works!</p>
+<header>
+  <mat-toolbar>{{ toolbarTitle }}</mat-toolbar>
+</header>
+<main>
+  <ng-content></ng-content>
+</main>
+<nav *ngIf="navEnabled"
+     class="mat-tab-group-inverted-header"
+     mat-tab-nav-bar>
+  <a [active]="navActiveLink == '/'"
+     mat-tab-link
+     routerLink="/">ホーム</a>
+  <a [active]="navActiveLink == '/item-list'"
+     mat-tab-link
+     routerLink="/item-list">やってみたいことリスト</a>
+</nav>

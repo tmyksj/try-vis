@@ -1,1 +1,7 @@
-<p>page-home works!</p>
+<app-layout-main navActiveLink="/">
+  <h1>推薦されたリスト</h1>
+  <mat-card *ngFor="let item of recommendedItemList">
+    <h2>{{ item.title }}</h2>
+    <p>{{ item.description }}</p>
+  </mat-card>
+</app-layout-main>

@@ -1,5 +1,8 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { MatCardModule } from "@angular/material/card";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
@@ -23,6 +26,9 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    MatCardModule,
+    MatTabsModule,
+    MatToolbarModule,
     RouterModule.forRoot([
       { path: "", component: PageHomeComponent },
       { path: "item/:id", component: PageItemComponent },

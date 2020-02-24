@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-layout-main",
@@ -7,7 +7,19 @@ import { Component, OnInit } from "@angular/core";
 })
 export class LayoutMainComponent implements OnInit {
 
+  @Input()
+  public navActiveLink: string;
+
+  @Input()
+  public navEnabled: boolean;
+
+  @Input()
+  public toolbarTitle: string;
+
   public constructor() {
+    this.navActiveLink = "/";
+    this.navEnabled = true;
+    this.toolbarTitle = "try-vis";
   }
 
   public ngOnInit(): void {
