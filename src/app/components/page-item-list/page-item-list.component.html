@@ -1,1 +1,7 @@
-<p>page-item-list works!</p>
+<app-layout-main navActiveLink="/item-list">
+  <h1>やってみたいことリスト</h1>
+  <mat-card *ngFor="let item of itemList">
+    <h2>{{ item.title }}</h2>
+    <p>{{ item.description }}</p>
+  </mat-card>
+</app-layout-main>
