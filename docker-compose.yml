@@ -5,6 +5,7 @@ services:
     image: "node:12"
     ports:
       - "4200:4200"
+      - "4201:4201"
       - "9876:9876"
     volumes:
       - "./:/app"

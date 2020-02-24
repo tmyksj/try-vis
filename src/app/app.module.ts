@@ -10,7 +10,9 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
+import { ServiceWorkerModule } from "@angular/service-worker";
 
+import { environment } from "../environments/environment";
 import { AppComponent } from "./components/app/app.component";
 import { LayoutMainComponent } from "./components/layout-main/layout-main.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
@@ -48,6 +50,9 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
       {path: "items/:id", component: PageItemComponent},
       {path: "items/:id/edit", component: PageItemEditComponent},
     ]),
+    ServiceWorkerModule.register("ngsw-worker.js", {
+      enabled: environment.production,
+    }),
   ],
   providers: [
   ],
