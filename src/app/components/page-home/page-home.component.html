@@ -1,7 +1,9 @@
 <app-layout-main navActiveLink="/">
   <h1>推薦されたリスト</h1>
-  <mat-card *ngFor="let item of recommendedItemList">
+  <a *ngFor="let item of recommendedItemList"
+     mat-stroked-button
+     routerLink="/items/{{ item.id }}">
     <h2>{{ item.title }}</h2>
     <p>{{ item.description }}</p>
-  </mat-card>
+  </a>
 </app-layout-main>
