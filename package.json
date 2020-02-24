@@ -1,9 +1,10 @@
 {
-  "name": "app",
+  "name": "try-vis",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:prod": "ng build --base-href=/ --prod && http-server -p 4201 -c-1 dist/try-vis/",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,6 +22,7 @@
     "@angular/platform-browser": "~9.0.2",
     "@angular/platform-browser-dynamic": "~9.0.2",
     "@angular/router": "~9.0.2",
+    "@angular/service-worker": "~9.0.2",
     "dexie": "^2.0.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
@@ -35,6 +37,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "http-server": "^0.12.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
