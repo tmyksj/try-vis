@@ -44,11 +44,11 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
     MatTabsModule,
     MatToolbarModule,
     RouterModule.forRoot([
-      {path: "", component: PageHomeComponent},
-      {path: "items", component: PageItemListComponent},
-      {path: "items/new", component: PageItemEditComponent},
-      {path: "items/:id", component: PageItemComponent},
-      {path: "items/:id/edit", component: PageItemEditComponent},
+      { path: "", component: PageHomeComponent },
+      { path: "items", component: PageItemListComponent },
+      { path: "items/new", component: PageItemEditComponent },
+      { path: "items/:id", component: PageItemComponent },
+      { path: "items/:id/edit", component: PageItemEditComponent },
     ]),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
