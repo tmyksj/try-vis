@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { fromPromise } from "rxjs/internal-compatibility";
+import { defer, from, Observable, ObservableInput } from "rxjs";
 import { map, mergeMap } from "rxjs/operators";
 import Dexie from "dexie";
 
 import { ItemDto } from "../dtos/item/item.dto";
+import { ItemLogDto } from "../dtos/item-log/item-log.dto";
 
 @Injectable({
   providedIn: "root",
@@ -13,17 +13,21 @@ export class Db {
 
   public readonly itemRepository: Repository<ItemDto>;
 
+  public readonly itemLogRepository: Repository<ItemLogDto>;
+
   private db: Dexie;
 
   public constructor() {
     this.db = new Dexie("db");
     this.migrate();
 
-    this.itemRepository = this.newRepository("item", ["description", "title"]);
+    this.itemRepository = this.newRepository("item", ["title", "description"]);
+    this.itemLogRepository = this.newRepository("itemLog", ["itemId", "type", "createdAt"]);
   }
 
   private migrate(): void {
     this.db.version(1).stores({ item: "++id" });
+    this.db.version(2).stores({ itemLog: "++id" });
   }
 
   private newRepository<T>(tableName: string, attrs: string[]): Repository<T> {
@@ -48,15 +52,15 @@ export class Db {
     return new class implements Repository<T> {
 
       deleteById(id: number): Observable<void> {
-        return fromPromise(
-          self.db.table(tableName).delete(id)
-        );
+        return defer((): ObservableInput<void> => {
+          return from(self.db.table(tableName).delete(id));
+        });
       }
 
       findAll(): Observable<T[]> {
-        return fromPromise(
-          self.db.table(tableName).toArray()
-        ).pipe(map((value: any[]): T[] => {
+        return defer((): ObservableInput<T[]> => {
+          return from(self.db.table(tableName).toArray());
+        }).pipe(map((value: any[]): T[] => {
           return value.map((v: any): T => {
             return db2dto(v);
           });
@@ -64,9 +68,9 @@ export class Db {
       }
 
       findById(id: number): Observable<T | null> {
-        return fromPromise(
-          self.db.table(tableName).where("id").equals(id).first()
-        ).pipe(map((value: any): T => {
+        return defer((): ObservableInput<T | null> => {
+          return from(self.db.table(tableName).where("id").equals(id).first());
+        }).pipe(map((value: any): T => {
           if (value === undefined) {
             return null;
           }
@@ -75,9 +79,9 @@ export class Db {
       }
 
       save(dto: T): Observable<T> {
-        return fromPromise(
-          self.db.table(tableName).put(dto2db(dto))
-        ).pipe(mergeMap(this.findById), map((value: T | null): T => {
+        return defer((): ObservableInput<number> => {
+          return from(self.db.table(tableName).put(dto2db(dto)));
+        }).pipe(mergeMap(this.findById), map((value: T | null): T => {
           if (value === null) {
             throw new Error("cannot found saved data");
           }
