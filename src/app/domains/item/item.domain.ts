@@ -26,13 +26,16 @@ export class ItemDomain {
     return forkJoin([
       this.db.itemRepository.deleteById(item.id),
       this.db.itemLogRepository.findAll().pipe(
-        mergeMap((value: ItemLogDto[]): ObservableInput<ItemLogDto> => {
-          return from(value);
-        }), filter((value: ItemLogDto): boolean => {
-          return item.id === value.itemId;
-        }), mergeMap((value: ItemLogDto): ObservableInput<void> => {
-          return this.db.itemLogRepository.deleteById(value.id);
-        }), startWith("emit least one item"),
+        mergeMap((itemLogList: ItemLogDto[]): ObservableInput<ItemLogDto> => {
+          return from(itemLogList);
+        }),
+        filter((itemLog: ItemLogDto): boolean => {
+          return item.id === itemLog.itemId;
+        }),
+        mergeMap((itemLog: ItemLogDto): ObservableInput<void> => {
+          return this.db.itemLogRepository.deleteById(itemLog.id);
+        }),
+        startWith("emit least one item"),
       ),
     ]).pipe(map((_: any): void => {
     }));
@@ -50,8 +53,25 @@ export class ItemDomain {
     return this.db.itemLogRepository.deleteById(itemLog.id);
   }
 
+  public item(id: number): Observable<ItemDto | null> {
+    return this.db.itemRepository.findById(id);
+  }
+
   public itemList(): Observable<ItemDto[]> {
     return this.db.itemRepository.findAll();
+  }
+
+  public itemLog(item: ItemDto, id: number): Observable<ItemLogDto | null> {
+    if (item.id === null) {
+      return throwError(new Error("item.id must not be null"));
+    }
+
+    return this.db.itemLogRepository.findById(id).pipe(map((itemLog: ItemLogDto | null): ItemLogDto | null => {
+      if (itemLog === null || item.id !== itemLog.id) {
+        return null;
+      }
+      return itemLog;
+    }));
   }
 
   public itemLogList(item: ItemDto): Observable<ItemLogDto[]> {
@@ -59,17 +79,17 @@ export class ItemDomain {
       return throwError(new Error("item.id must not be null"));
     }
 
-    return this.db.itemLogRepository.findAll().pipe(map((itemLog: ItemLogDto[]): ItemLogDto[] => {
-      return itemLog.filter((value: ItemLogDto) => {
-        return item.id === value.itemId;
+    return this.db.itemLogRepository.findAll().pipe(map((itemLogList: ItemLogDto[]): ItemLogDto[] => {
+      return itemLogList.filter((itemLog: ItemLogDto) => {
+        return item.id === itemLog.itemId;
       });
     }));
   }
 
   public recommendedItemList(): Observable<ItemDto[]> {
     // TODO: ちゃんとした推薦アルゴリズムを考える
-    return this.itemList().pipe(map((item: ItemDto[]): ItemDto[] => {
-      return item.slice(0, 3);
+    return this.itemList().pipe(map((itemList: ItemDto[]): ItemDto[] => {
+      return itemList.slice(0, 3);
     }));
   }
 
@@ -77,7 +97,7 @@ export class ItemDomain {
     return this.db.itemRepository.save(item);
   }
 
-  public saveLog(item: ItemDto, type: ItemLogTypeDto): Observable<void> {
+  public saveLog(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<void> {
     if (item.id === null) {
       return throwError(new Error("item.id must not be null"));
     }
@@ -85,7 +105,7 @@ export class ItemDomain {
     return this.db.itemLogRepository.save({
       id: null,
       itemId: item.id,
-      type,
+      type: itemLogType,
       createdAt: new Date(),
     }).pipe(map((_: ItemLogDto): void => {
     }));

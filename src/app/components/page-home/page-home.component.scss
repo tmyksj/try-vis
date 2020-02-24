@@ -1,0 +1,26 @@
+h1 {
+  margin: 1rem 0;
+}
+
+h2 {
+  margin: 0;
+}
+
+.item {
+  display: block;
+  margin: 0.5rem 0;
+  padding: 1rem;
+  text-align: left;
+
+  p {
+    font-weight: normal;
+    line-height: 1.25rem;
+    margin: 0;
+  }
+}
+
+.add {
+  bottom: 4rem;
+  position: fixed;
+  right: 1rem;
+}

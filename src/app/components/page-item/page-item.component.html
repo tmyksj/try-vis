@@ -1,1 +1,45 @@
-<p>page-item works!</p>
+<app-layout-main>
+  <ng-container *ngIf="isLoaded">
+    <div class="action">
+      <button (click)="onClickLog(refItemLogTypeDto.Later)"
+              mat-stroked-button>
+        <mat-icon>repeat</mat-icon>
+      </button>
+      <button (click)="onClickLog(refItemLogTypeDto.DoneToday)"
+              color="primary"
+              mat-stroked-button>
+        <mat-icon>done</mat-icon>
+      </button>
+      <button (click)="onClickLog(refItemLogTypeDto.Done)"
+              color="primary"
+              mat-stroked-button>
+        <mat-icon>done_all</mat-icon>
+      </button>
+      <button (click)="onClickLog(refItemLogTypeDto.Quit)"
+              color="warn"
+              mat-stroked-button>
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h1>{{ item.title }}</h1>
+    <p>{{ item.description }}</p>
+
+    <h2>履歴</h2>
+    <mat-list>
+      <mat-list-item *ngFor="let itemLog of itemLogList">
+        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Later"
+                  mat-list-icon>repeat</mat-icon>
+        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.DoneToday"
+                  mat-list-icon>done</mat-icon>
+        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Done"
+                  mat-list-icon>done_all</mat-icon>
+        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Quit"
+                  mat-list-icon>delete_outline</mat-icon>
+        <p mat-line>{{ itemLog.createdAt | date:"yyyy/MM/dd HH:mm" }}</p>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+</app-layout-main>

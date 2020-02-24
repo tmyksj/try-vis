@@ -1,1 +1,16 @@
-<p>page-home works!</p>
+<app-layout-main navActiveLink="/">
+  <h1>推薦されたリスト</h1>
+  <a *ngFor="let item of recommendedItemList"
+     class="item"
+     mat-stroked-button
+     routerLink="/items/{{ item.id }}">
+    <h2>{{ item.title }}</h2>
+    <p>{{ item.description }}</p>
+  </a>
+  <a class="add"
+     color="primary"
+     mat-fab
+     routerLink="/items/new">
+    <mat-icon>add</mat-icon>
+  </a>
+</app-layout-main>

@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 
-import { PageItemComponent } from "./page-item.component";
+import { PageItemEditComponent } from "./page-item-edit.component";
 
-describe("PageItemComponent", () => {
+describe("PageItemEditComponent", () => {
 
-  let component: PageItemComponent;
-  let fixture: ComponentFixture<PageItemComponent>;
+  let component: PageItemEditComponent;
+  let fixture: ComponentFixture<PageItemEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        PageItemComponent,
+        PageItemEditComponent,
       ],
       imports: [
         RouterTestingModule,
@@ -20,7 +20,7 @@ describe("PageItemComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PageItemComponent);
+    fixture = TestBed.createComponent(PageItemEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

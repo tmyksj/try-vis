@@ -1,0 +1,18 @@
+<header>
+  <mat-toolbar>
+    <h1>{{ toolbarTitle }}</h1>
+  </mat-toolbar>
+</header>
+<main>
+  <ng-content></ng-content>
+</main>
+<nav *ngIf="navEnabled"
+     class="mat-tab-group-inverted-header"
+     mat-tab-nav-bar>
+  <a [active]="navActiveLink == '/'"
+     mat-tab-link
+     routerLink="/">ホーム</a>
+  <a [active]="navActiveLink == '/items'"
+     mat-tab-link
+     routerLink="/items">やってみたいことリスト</a>
+</nav>
