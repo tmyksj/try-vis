@@ -83,7 +83,7 @@ export class Db {
           return from(self.db.table(tableName).put(dto2db(dto)));
         }).pipe(mergeMap(this.findById), map((value: T | null): T => {
           if (value === null) {
-            throw new Error("cannot found saved data");
+            throw new Error("cannot find saved data");
           }
           return value;
         }));
