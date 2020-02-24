@@ -37,7 +37,7 @@
                   mat-list-icon>done_all</mat-icon>
         <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Quit"
                   mat-list-icon>delete_outline</mat-icon>
-        <p mat-line>{{ itemLog.createdAt }}</p>
+        <p mat-line>{{ itemLog.createdAt | date:"yyyy/MM/dd HH:mm" }}</p>
       </mat-list-item>
     </mat-list>
   </ng-container>
