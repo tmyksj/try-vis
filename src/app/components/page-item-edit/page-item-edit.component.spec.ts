@@ -1,16 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PageItemEditComponent } from './page-item-edit.component';
+import { PageItemEditComponent } from "./page-item-edit.component";
 
-describe('PageItemEditComponent', () => {
+describe("PageItemEditComponent", () => {
+
   let component: PageItemEditComponent;
   let fixture: ComponentFixture<PageItemEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageItemEditComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        PageItemEditComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +21,8 @@ describe('PageItemEditComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
+
 });

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-page-item-edit',
-  templateUrl: './page-item-edit.component.html',
-  styleUrls: ['./page-item-edit.component.scss']
+  selector: "app-page-item-edit",
+  styleUrls: ["./page-item-edit.component.scss"],
+  templateUrl: "./page-item-edit.component.html",
 })
 export class PageItemEditComponent implements OnInit {
 
-  constructor() { }
+  public constructor() {
+  }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
 }

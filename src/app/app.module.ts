@@ -13,8 +13,8 @@ import { AppComponent } from "./components/app/app.component";
 import { LayoutMainComponent } from "./components/layout-main/layout-main.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from "./components/page-item/page-item.component";
+import { PageItemEditComponent } from "./components/page-item-edit/page-item-edit.component";
 import { PageItemListComponent } from "./components/page-item-list/page-item-list.component";
-import { PageItemEditComponent } from './components/page-item-edit/page-item-edit.component';
 
 @NgModule({
   bootstrap: [
@@ -25,8 +25,8 @@ import { PageItemEditComponent } from './components/page-item-edit/page-item-edi
     LayoutMainComponent,
     PageHomeComponent,
     PageItemComponent,
-    PageItemListComponent,
     PageItemEditComponent,
+    PageItemListComponent,
   ],
   imports: [
     BrowserAnimationsModule,
