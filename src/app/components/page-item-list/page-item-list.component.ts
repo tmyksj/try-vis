@@ -19,7 +19,7 @@ export class PageItemListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.itemDomain.itemList().subscribe((itemList: ItemDto[]) => {
+    this.itemDomain.itemList().subscribe((itemList: ItemDto[]): void => {
       this.itemList = itemList;
     });
   }

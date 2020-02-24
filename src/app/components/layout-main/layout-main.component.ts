@@ -17,7 +17,7 @@ export class LayoutMainComponent implements OnInit {
   public toolbarTitle: string;
 
   public constructor() {
-    this.navActiveLink = "/";
+    this.navActiveLink = "";
     this.navEnabled = true;
     this.toolbarTitle = "try-vis";
   }
