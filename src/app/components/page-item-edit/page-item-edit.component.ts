@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { ItemDomain } from "../../domains/item/item.domain";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { map, switchMap } from "rxjs/operators";
 import { Observable, of } from "rxjs";
+import { map, switchMap } from "rxjs/operators";
+
+import { ItemDomain } from "../../domains/item/item.domain";
 import { ItemDto } from "../../dtos/item/item.dto";
 
 @Component({
