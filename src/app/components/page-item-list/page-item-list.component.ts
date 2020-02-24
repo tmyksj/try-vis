@@ -20,7 +20,9 @@ export class PageItemListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.itemDomain.itemList().subscribe((itemList: ItemDto[]): void => {
-      this.itemList = itemList;
+      this.itemList = itemList.sort((a: ItemDto, b: ItemDto): number => {
+        return b.id - a.id;
+      });
     });
   }
 

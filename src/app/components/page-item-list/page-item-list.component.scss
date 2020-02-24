@@ -6,7 +6,7 @@ h2 {
   margin: 0;
 }
 
-a {
+.item {
   display: block;
   margin: 0.5rem 0;
   padding: 1rem;
@@ -17,4 +17,10 @@ a {
     line-height: 1.25rem;
     margin: 0;
   }
+}
+
+.add {
+  bottom: 4rem;
+  position: fixed;
+  right: 1rem;
 }

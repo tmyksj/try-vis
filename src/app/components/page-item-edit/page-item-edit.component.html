@@ -1,1 +1,22 @@
-<p>page-item-edit works!</p>
+<app-layout-main>
+  <div class="action">
+    <button (click)="onSubmit()"
+            mat-stroked-button>保存
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <mat-form-field class="title">
+    <mat-label>タイトル</mat-label>
+    <input [(ngModel)]="varTitle"
+           matInput>
+  </mat-form-field>
+
+  <mat-form-field class="description">
+    <mat-label>詳細</mat-label>
+    <textarea [(ngModel)]="varDescription"
+              matInput></textarea>
+  </mat-form-field>
+
+</app-layout-main>

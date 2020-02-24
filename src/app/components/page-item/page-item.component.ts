@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { combineLatest, Observable } from "rxjs";
-import { mergeMap, switchMap } from "rxjs/operators";
+import { map, mergeMap, switchMap } from "rxjs/operators";
 
 import { ItemDomain } from "../../domains/item/item.domain";
 import { ItemDto } from "../../dtos/item/item.dto";
@@ -38,9 +38,17 @@ export class PageItemComponent implements OnInit {
   public ngOnInit(): void {
     this.isLoaded = false;
 
-    const itemObservable: Observable<ItemDto> = this.route.paramMap.pipe(switchMap((params: ParamMap): Observable<ItemDto> => {
-      return this.itemDomain.item(parseInt(params.get("id"), 10));
-    }));
+    const itemObservable: Observable<ItemDto> = this.route.paramMap.pipe(
+      switchMap((params: ParamMap): Observable<ItemDto> => {
+        return this.itemDomain.item(parseInt(params.get("id"), 10));
+      }),
+      map((item: ItemDto | null): ItemDto => {
+        if (item === null) {
+          throw new Error("cannot find item");
+        }
+        return item;
+      }),
+    );
 
     combineLatest([
       itemObservable,

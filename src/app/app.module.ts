@@ -1,11 +1,13 @@
-import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
@@ -31,16 +33,20 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    FormsModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatTabsModule,
     MatToolbarModule,
     RouterModule.forRoot([
-      { path: "", component: PageHomeComponent },
-      { path: "items", component: PageItemListComponent },
-      { path: "items/:id", component: PageItemComponent },
+      {path: "", component: PageHomeComponent},
+      {path: "items", component: PageItemListComponent},
+      {path: "items/new", component: PageItemEditComponent},
+      {path: "items/:id", component: PageItemComponent},
+      {path: "items/:id/edit", component: PageItemEditComponent},
     ]),
   ],
   providers: [

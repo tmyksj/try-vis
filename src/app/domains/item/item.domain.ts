@@ -34,7 +34,8 @@ export class ItemDomain {
         }),
         mergeMap((itemLog: ItemLogDto): ObservableInput<void> => {
           return this.db.itemLogRepository.deleteById(itemLog.id);
-        }), startWith("emit least one item"),
+        }),
+        startWith("emit least one item"),
       ),
     ]).pipe(map((_: any): void => {
     }));
@@ -52,7 +53,7 @@ export class ItemDomain {
     return this.db.itemLogRepository.deleteById(itemLog.id);
   }
 
-  public item(id: number): Observable<ItemDto> {
+  public item(id: number): Observable<ItemDto | null> {
     return this.db.itemRepository.findById(id);
   }
 
@@ -60,7 +61,7 @@ export class ItemDomain {
     return this.db.itemRepository.findAll();
   }
 
-  public itemLog(item: ItemDto, id: number): Observable<ItemLogDto> {
+  public itemLog(item: ItemDto, id: number): Observable<ItemLogDto | null> {
     if (item.id === null) {
       return throwError(new Error("item.id must not be null"));
     }
