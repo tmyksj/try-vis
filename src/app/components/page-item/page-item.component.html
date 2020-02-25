@@ -18,28 +18,40 @@
       <button (click)="onClickLog(refItemLogTypeDto.Quit)"
               color="warn"
               mat-stroked-button>
-        <mat-icon>delete_outline</mat-icon>
+        <mat-icon>close</mat-icon>
       </button>
     </div>
 
     <mat-divider></mat-divider>
 
-    <h1>{{ item.title }}</h1>
-    <p>{{ item.description }}</p>
+    <div class="title">
+      <h1>{{ item.title }}</h1>
+      <a mat-stroked-button
+         routerLink="/items/{{ item.id }}/edit">編集</a>
+      <button (click)="onClickDelete()"
+              color="warn"
+              mat-stroked-button>削除</button>
+    </div>
 
-    <h2>履歴</h2>
-    <mat-list>
-      <mat-list-item *ngFor="let itemLog of itemLogList">
-        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Later"
-                  mat-list-icon>repeat</mat-icon>
-        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.DoneToday"
-                  mat-list-icon>done</mat-icon>
-        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Done"
-                  mat-list-icon>done_all</mat-icon>
-        <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Quit"
-                  mat-list-icon>delete_outline</mat-icon>
-        <p mat-line>{{ itemLog.createdAt | date:"yyyy/MM/dd HH:mm" }}</p>
-      </mat-list-item>
-    </mat-list>
+    <div class="description">
+      <p>{{ item.description }}</p>
+    </div>
+
+    <div class="log">
+      <h2>履歴</h2>
+      <mat-list>
+        <mat-list-item *ngFor="let itemLog of itemLogList">
+          <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Later"
+                    mat-list-icon>repeat</mat-icon>
+          <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.DoneToday"
+                    mat-list-icon>done</mat-icon>
+          <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Done"
+                    mat-list-icon>done_all</mat-icon>
+          <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Quit"
+                    mat-list-icon>close</mat-icon>
+          <p mat-line>{{ itemLog.createdAt | date:"yyyy/MM/dd HH:mm" }}</p>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </ng-container>
 </app-layout-main>

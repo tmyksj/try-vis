@@ -67,6 +67,12 @@ export class PageItemComponent implements OnInit {
     });
   }
 
+  public onClickDelete(): void {
+    this.itemDomain.delete(this.item).subscribe((): void => {
+      this.router.navigateByUrl("/");
+    });
+  }
+
   public onClickLog(itemLogType: ItemLogTypeDto): void {
     this.itemDomain.saveLog(this.item, itemLogType).subscribe((): void => {
       this.router.navigateByUrl("/");
