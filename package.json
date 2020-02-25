@@ -4,11 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:prod": "ng build --base-href=/ --prod && http-server -p 4201 -c-1 dist/try-vis/",
+    "start:prod": "ng build --base-href=/try-vis/ --prod && http-server -p 4201 -c-1 dist/",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng deploy --base-href=/try-vis/ --message '[skip ci] Auto-generated commit'"
   },
   "private": true,
   "dependencies": {
