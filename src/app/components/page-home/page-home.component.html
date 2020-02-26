@@ -1,4 +1,9 @@
 <app-layout-main navActiveLink="/">
+  <h1>今までのステップ</h1>
+  <p class="steps">{{ steps}} Steps</p>
+
+  <mat-divider></mat-divider>
+
   <h1>推薦されたリスト</h1>
   <a *ngFor="let item of recommendedItemList"
      class="item"
