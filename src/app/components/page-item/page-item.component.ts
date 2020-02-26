@@ -67,6 +67,28 @@ export class PageItemComponent implements OnInit {
     });
   }
 
+  public isEnabledLogLater(): boolean {
+    return !this.isLoggedDoneTodaySinceToday()
+      && !this.isLoggedDone()
+      && !this.isLoggedQuit();
+  }
+
+  public isEnabledLogDoneToday(): boolean {
+    return !this.isLoggedDoneTodaySinceToday()
+      && !this.isLoggedDone()
+      && !this.isLoggedQuit();
+  }
+
+  public isEnabledLogDone(): boolean {
+    return !this.isLoggedDone()
+      && !this.isLoggedQuit();
+  }
+
+  public isEnabledLogQuit(): boolean {
+    return !this.isLoggedDone()
+      && !this.isLoggedQuit();
+  }
+
   public onClickDelete(): void {
     this.itemDomain.delete(this.item).subscribe((): void => {
       this.router.navigateByUrl("/");
@@ -77,6 +99,29 @@ export class PageItemComponent implements OnInit {
     this.itemDomain.saveLog(this.item, itemLogType).subscribe((): void => {
       this.router.navigateByUrl("/");
     });
+  }
+
+  private isLoggedDoneTodaySinceToday(): boolean {
+    const now: Date = new Date();
+    const today: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    return this.itemLogList.find((itemLog: ItemLogDto): boolean => {
+      return itemLog.type === ItemLogTypeDto.DoneToday
+        && itemLog.createdAt !== null
+        && itemLog.createdAt.getTime() >= today.getTime();
+    }) !== undefined;
+  }
+
+  private isLoggedDone(): boolean {
+    return this.itemLogList.find((itemLog: ItemLogDto): boolean => {
+      return itemLog.type === ItemLogTypeDto.Done;
+    }) !== undefined;
+  }
+
+  private isLoggedQuit(): boolean {
+    return this.itemLogList.find((itemLog: ItemLogDto): boolean => {
+      return itemLog.type === ItemLogTypeDto.Quit;
+    }) !== undefined;
   }
 
 }

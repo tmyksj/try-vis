@@ -6,6 +6,12 @@ h2 {
   margin: 0;
 }
 
+.steps {
+  font: 400 24px/32px Roboto, "Helvetica Neue", sans-serif;
+  margin: 4rem 0;
+  text-align: center;
+}
+
 .item {
   display: block;
   margin: 0.5rem 0;
@@ -23,4 +29,8 @@ h2 {
   bottom: 4rem;
   position: fixed;
   right: 1rem;
+}
+
+mat-divider {
+  margin: 4rem 0;
 }

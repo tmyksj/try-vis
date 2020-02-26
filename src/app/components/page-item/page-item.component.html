@@ -1,21 +1,25 @@
 <app-layout-main>
   <ng-container *ngIf="isLoaded">
     <div class="action">
-      <button (click)="onClickLog(refItemLogTypeDto.Later)"
+      <button [disabled]="!isEnabledLogLater()"
+              (click)="onClickLog(refItemLogTypeDto.Later)"
               mat-stroked-button>
         <mat-icon>repeat</mat-icon>
       </button>
-      <button (click)="onClickLog(refItemLogTypeDto.DoneToday)"
+      <button [disabled]="!isEnabledLogDoneToday()"
+              (click)="onClickLog(refItemLogTypeDto.DoneToday)"
               color="primary"
               mat-stroked-button>
         <mat-icon>done</mat-icon>
       </button>
-      <button (click)="onClickLog(refItemLogTypeDto.Done)"
+      <button [disabled]="!isEnabledLogDone()"
+              (click)="onClickLog(refItemLogTypeDto.Done)"
               color="primary"
               mat-stroked-button>
         <mat-icon>done_all</mat-icon>
       </button>
-      <button (click)="onClickLog(refItemLogTypeDto.Quit)"
+      <button [disabled]="!isEnabledLogQuit()"
+              (click)="onClickLog(refItemLogTypeDto.Quit)"
               color="warn"
               mat-stroked-button>
         <mat-icon>close</mat-icon>
