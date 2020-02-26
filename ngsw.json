@@ -1,0 +1,80 @@
+{
+  "configVersion": 1,
+  "timestamp": 1582714449367,
+  "index": "/try-vis/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/try-vis/favicon.ico",
+        "/try-vis/index.html",
+        "/try-vis/main-es2015.8ec36d20680a38fa8665.js",
+        "/try-vis/main-es5.8ec36d20680a38fa8665.js",
+        "/try-vis/manifest.webmanifest",
+        "/try-vis/polyfills-es2015.f2044b05ffe45ba13894.js",
+        "/try-vis/polyfills-es5.0a6e0306b16a22a766e1.js",
+        "/try-vis/runtime-es2015.44f7a62596b3847c435b.js",
+        "/try-vis/runtime-es5.44f7a62596b3847c435b.js",
+        "/try-vis/styles.55db0e092af1a77c44e3.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/try-vis/assets/icons/icon-128x128.png",
+        "/try-vis/assets/icons/icon-144x144.png",
+        "/try-vis/assets/icons/icon-152x152.png",
+        "/try-vis/assets/icons/icon-192x192.png",
+        "/try-vis/assets/icons/icon-384x384.png",
+        "/try-vis/assets/icons/icon-512x512.png",
+        "/try-vis/assets/icons/icon-72x72.png",
+        "/try-vis/assets/icons/icon-96x96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/try-vis/assets/icons/icon-128x128.png": "a9043d9cf97151c7a589e9328aeb6bf56b435bce",
+    "/try-vis/assets/icons/icon-144x144.png": "c9ba37ac85c6282a2eaf1c31b2e84c96913d09fe",
+    "/try-vis/assets/icons/icon-152x152.png": "f52ab3a8bda30ab548bc2c5034e8f30b1fa6f855",
+    "/try-vis/assets/icons/icon-192x192.png": "09308c762085db6ed4b144941f730d81f13fc4c0",
+    "/try-vis/assets/icons/icon-384x384.png": "a92b0a887ddf93f94b1884bab61c153688e9d769",
+    "/try-vis/assets/icons/icon-512x512.png": "be60dc9d4779355db6266105be55161ebb04503e",
+    "/try-vis/assets/icons/icon-72x72.png": "5ebf4e0a2f669dd79e020874ad05dc1a8bc7ad80",
+    "/try-vis/assets/icons/icon-96x96.png": "adc66c4df8aa8bde8c3b0ac7e3a4051695f33901",
+    "/try-vis/favicon.ico": "8e7b3fb52ef199b15fd520e778f44452689b1cfe",
+    "/try-vis/index.html": "6ca9cf38f7cb609a5083218352db85ffc59dcb49",
+    "/try-vis/main-es2015.8ec36d20680a38fa8665.js": "4da2d874061bd2c614140e38093989ba5cf3a71b",
+    "/try-vis/main-es5.8ec36d20680a38fa8665.js": "228e824613b7e1c40fe00b4bf5fff587acae6a7b",
+    "/try-vis/manifest.webmanifest": "69d57be21644f0a184bca290d6cef759272cf370",
+    "/try-vis/polyfills-es2015.f2044b05ffe45ba13894.js": "8779ed8d9bf0580e1b50b352a9b8fd520be24433",
+    "/try-vis/polyfills-es5.0a6e0306b16a22a766e1.js": "8d03638471d7374e81cf33adfdea439f84ac3873",
+    "/try-vis/runtime-es2015.44f7a62596b3847c435b.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/try-vis/runtime-es5.44f7a62596b3847c435b.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/try-vis/styles.55db0e092af1a77c44e3.css": "e5d671e18bd58d69c9c02d6f807bb8c1c383dc30"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
