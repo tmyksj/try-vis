@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { map, mergeMap, reduce } from "rxjs/operators";
 import { from, Observable } from "rxjs";
+import { map, mergeMap, reduce } from "rxjs/operators";
 
 import { ItemDomain } from "../../domains/item/item.domain";
 import { ItemDto } from "../../dtos/item/item.dto";
