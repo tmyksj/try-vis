@@ -37,6 +37,41 @@ export class ItemDomain {
     );
   }
 
+  public pickupRecommendedItemList(): Observable<ItemDto[]> {
+    // TODO: ちゃんとした推薦アルゴリズムを考える
+    return this.itemList().pipe(map((itemList: ItemDto[]): ItemDto[] => {
+      return itemList.slice(0, 3);
+    }));
+  }
+
+  public isLoggable(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
+    switch (itemLogType) {
+      case ItemLogTypeDto.Later:
+        // fall through
+      case ItemLogTypeDto.DoneToday:
+        return forkJoin([
+          this.isLoggedSinceToday(item, ItemLogTypeDto.DoneToday),
+          this.isLogged(item, ItemLogTypeDto.Done),
+          this.isLogged(item, ItemLogTypeDto.Quit),
+        ]).pipe(
+          map((value: [boolean, boolean, boolean]): boolean => {
+            return !value[0] && !value[1] && !value[2];
+          }),
+        );
+      case ItemLogTypeDto.Done:
+        // fall through
+      case ItemLogTypeDto.Quit:
+        return forkJoin([
+          this.isLogged(item, ItemLogTypeDto.Done),
+          this.isLogged(item, ItemLogTypeDto.Quit),
+        ]).pipe(
+          map((value: [boolean, boolean]): boolean => {
+            return !value[0] && !value[1];
+          }),
+        );
+    }
+  }
+
   public delete(item: ItemDto): Observable<void> {
     if (item.id === null) {
       return throwError(new Error("item.id must not be null"));
@@ -105,13 +140,6 @@ export class ItemDomain {
     }));
   }
 
-  public recommendedItemList(): Observable<ItemDto[]> {
-    // TODO: ちゃんとした推薦アルゴリズムを考える
-    return this.itemList().pipe(map((itemList: ItemDto[]): ItemDto[] => {
-      return itemList.slice(0, 3);
-    }));
-  }
-
   public save(item: ItemDto): Observable<ItemDto> {
     return this.db.itemRepository.save(item);
   }
@@ -128,6 +156,31 @@ export class ItemDomain {
       createdAt: new Date(),
     }).pipe(map((_: ItemLogDto): void => {
     }));
+  }
+
+  private isLogged(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
+    return this.itemLogList(item).pipe(
+      map((itemLogList: ItemLogDto[]): boolean => {
+        return itemLogList.find((itemLog: ItemLogDto): boolean => {
+          return itemLog.type === itemLogType;
+        }) !== undefined;
+      }),
+    );
+  }
+
+  private isLoggedSinceToday(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
+    const now: Date = new Date();
+    const today: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    return this.itemLogList(item).pipe(
+      map((itemLogList: ItemLogDto[]): boolean => {
+        return itemLogList.find((itemLog: ItemLogDto): boolean => {
+          return itemLog.type === itemLogType
+            && itemLog.createdAt !== null
+            && itemLog.createdAt.getTime() >= today.getTime();
+        }) !== undefined;
+      }),
+    );
   }
 
 }

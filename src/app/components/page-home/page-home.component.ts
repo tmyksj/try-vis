@@ -21,12 +21,12 @@ export class PageHomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.itemDomain.recommendedItemList().subscribe((itemList: ItemDto[]): void => {
-      this.recommendedItemList = itemList;
-    });
-
     this.itemDomain.accumulateSteps().subscribe((steps: number): void => {
       this.steps = steps;
+    });
+
+    this.itemDomain.pickupRecommendedItemList().subscribe((itemList: ItemDto[]): void => {
+      this.recommendedItemList = itemList;
     });
   }
 
