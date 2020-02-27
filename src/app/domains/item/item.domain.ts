@@ -18,6 +18,25 @@ export class ItemDomain {
     this.db = db;
   }
 
+  public accumulateSteps(): Observable<number> {
+    return this.db.itemLogRepository.findAll().pipe(
+      map((itemLogList: ItemLogDto[]): number => {
+        return itemLogList.map((itemLog: ItemLogDto): number => {
+          switch (itemLog.type) {
+            case ItemLogTypeDto.DoneToday:
+              return 1;
+            case ItemLogTypeDto.Done:
+              return 2;
+            default:
+              return 0;
+          }
+        }).reduce((previousValue, currentValue) => {
+          return previousValue + currentValue;
+        }, 0);
+      }),
+    );
+  }
+
   public delete(item: ItemDto): Observable<void> {
     if (item.id === null) {
       return throwError(new Error("item.id must not be null"));
