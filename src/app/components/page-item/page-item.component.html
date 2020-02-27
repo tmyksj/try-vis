@@ -1,24 +1,24 @@
 <app-layout-main>
   <ng-container *ngIf="isLoaded">
     <div class="action">
-      <button [disabled]="!isEnabledLogLater()"
+      <button [disabled]="!isLoggableLater"
               (click)="onClickLog(refItemLogTypeDto.Later)"
               mat-stroked-button>
         <mat-icon>repeat</mat-icon>
       </button>
-      <button [disabled]="!isEnabledLogDoneToday()"
+      <button [disabled]="!isLoggableDoneToday"
               (click)="onClickLog(refItemLogTypeDto.DoneToday)"
               color="primary"
               mat-stroked-button>
         <mat-icon>done</mat-icon>
       </button>
-      <button [disabled]="!isEnabledLogDone()"
+      <button [disabled]="!isLoggableDone"
               (click)="onClickLog(refItemLogTypeDto.Done)"
               color="primary"
               mat-stroked-button>
         <mat-icon>done_all</mat-icon>
       </button>
-      <button [disabled]="!isEnabledLogQuit()"
+      <button [disabled]="!isLoggableQuit"
               (click)="onClickLog(refItemLogTypeDto.Quit)"
               color="warn"
               mat-stroked-button>

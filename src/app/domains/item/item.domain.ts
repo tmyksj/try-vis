@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { forkJoin, from, Observable, ObservableInput, throwError } from "rxjs";
-import { filter, map, mergeMap, startWith } from "rxjs/operators";
+import { combineLatest, forkJoin, from, Observable, ObservableInput, of, throwError } from "rxjs";
+import { filter, map, mergeMap, startWith, toArray } from "rxjs/operators";
 
 import { Db } from "../../db/db";
 import { ItemDto } from "../../dtos/item/item.dto";
@@ -16,6 +16,88 @@ export class ItemDomain {
 
   public constructor(db: Db) {
     this.db = db;
+  }
+
+  public accumulateSteps(): Observable<number> {
+    return this.db.itemLogRepository.findAll().pipe(
+      map((itemLogList: ItemLogDto[]): number => {
+        return itemLogList.map((itemLog: ItemLogDto): number => {
+          switch (itemLog.type) {
+            case ItemLogTypeDto.DoneToday:
+              return 1;
+            case ItemLogTypeDto.Done:
+              return 2;
+            default:
+              return 0;
+          }
+        }).reduce((previousValue, currentValue) => {
+          return previousValue + currentValue;
+        }, 0);
+      }),
+    );
+  }
+
+  public pickupRecommendedItemList(): Observable<ItemDto[]> {
+    return this.itemList().pipe(
+      mergeMap((itemList: ItemDto[]): Observable<ItemDto> => {
+        return from(itemList);
+      }),
+      mergeMap((item: ItemDto): Observable<[ItemDto, boolean, Date]> => {
+        return combineLatest([
+          of(item),
+          this.isLoggable(item, ItemLogTypeDto.DoneToday),
+          this.itemLogList(item).pipe(
+            map((itemLogList: ItemLogDto[]): Date => {
+              return itemLogList.reduce((previousValue: Date, currentValue: ItemLogDto): Date => {
+                  if (currentValue.createdAt !== null && previousValue.getTime() < currentValue.createdAt.getTime()) {
+                    return currentValue.createdAt;
+                  }
+                  return previousValue;
+              }, new Date(0));
+            }),
+          ),
+        ]);
+      }),
+      filter((value: [ItemDto, boolean, Date]): boolean => {
+        return value[1];
+      }),
+      toArray<[ItemDto, boolean, Date]>(),
+      map((value: [ItemDto, boolean, Date][]): ItemDto[] => {
+        return value.sort((a: [ItemDto, boolean, Date], b: [ItemDto, boolean, Date]): number => {
+          return a[2].getTime() - b[2].getTime();
+        }).map((v: [ItemDto, boolean, Date]): ItemDto => {
+          return v[0];
+        }).slice(0, 3);
+      }),
+    );
+  }
+
+  public isLoggable(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
+    switch (itemLogType) {
+      case ItemLogTypeDto.Later:
+        // fall through
+      case ItemLogTypeDto.DoneToday:
+        return forkJoin([
+          this.isLoggedSinceToday(item, ItemLogTypeDto.DoneToday),
+          this.isLogged(item, ItemLogTypeDto.Done),
+          this.isLogged(item, ItemLogTypeDto.Quit),
+        ]).pipe(
+          map((value: [boolean, boolean, boolean]): boolean => {
+            return !value[0] && !value[1] && !value[2];
+          }),
+        );
+      case ItemLogTypeDto.Done:
+        // fall through
+      case ItemLogTypeDto.Quit:
+        return forkJoin([
+          this.isLogged(item, ItemLogTypeDto.Done),
+          this.isLogged(item, ItemLogTypeDto.Quit),
+        ]).pipe(
+          map((value: [boolean, boolean]): boolean => {
+            return !value[0] && !value[1];
+          }),
+        );
+    }
   }
 
   public delete(item: ItemDto): Observable<void> {
@@ -86,13 +168,6 @@ export class ItemDomain {
     }));
   }
 
-  public recommendedItemList(): Observable<ItemDto[]> {
-    // TODO: ちゃんとした推薦アルゴリズムを考える
-    return this.itemList().pipe(map((itemList: ItemDto[]): ItemDto[] => {
-      return itemList.slice(0, 3);
-    }));
-  }
-
   public save(item: ItemDto): Observable<ItemDto> {
     return this.db.itemRepository.save(item);
   }
@@ -109,6 +184,31 @@ export class ItemDomain {
       createdAt: new Date(),
     }).pipe(map((_: ItemLogDto): void => {
     }));
+  }
+
+  private isLogged(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
+    return this.itemLogList(item).pipe(
+      map((itemLogList: ItemLogDto[]): boolean => {
+        return itemLogList.find((itemLog: ItemLogDto): boolean => {
+          return itemLog.type === itemLogType;
+        }) !== undefined;
+      }),
+    );
+  }
+
+  private isLoggedSinceToday(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
+    const now: Date = new Date();
+    const today: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    return this.itemLogList(item).pipe(
+      map((itemLogList: ItemLogDto[]): boolean => {
+        return itemLogList.find((itemLog: ItemLogDto): boolean => {
+          return itemLog.type === itemLogType
+            && itemLog.createdAt !== null
+            && itemLog.createdAt.getTime() >= today.getTime();
+        }) !== undefined;
+      }),
+    );
   }
 
 }
