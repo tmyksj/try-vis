@@ -26,7 +26,9 @@ export class PageHomeComponent implements OnInit {
     });
 
     this.itemDomain.pickupRecommendedItemList().subscribe((itemList: ItemDto[]): void => {
-      this.recommendedItemList = itemList;
+      this.recommendedItemList = itemList.sort((a: ItemDto, b: ItemDto): number => {
+        return b.id - a.id;
+      });
     });
   }
 
