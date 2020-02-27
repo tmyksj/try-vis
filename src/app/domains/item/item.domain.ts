@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { forkJoin, from, Observable, ObservableInput, throwError } from "rxjs";
-import { filter, map, mergeMap, startWith } from "rxjs/operators";
+import { combineLatest, forkJoin, from, Observable, ObservableInput, of, throwError } from "rxjs";
+import { filter, map, mergeMap, startWith, toArray } from "rxjs/operators";
 
 import { Db } from "../../db/db";
 import { ItemDto } from "../../dtos/item/item.dto";
@@ -38,10 +38,38 @@ export class ItemDomain {
   }
 
   public pickupRecommendedItemList(): Observable<ItemDto[]> {
-    // TODO: ちゃんとした推薦アルゴリズムを考える
-    return this.itemList().pipe(map((itemList: ItemDto[]): ItemDto[] => {
-      return itemList.slice(0, 3);
-    }));
+    return this.itemList().pipe(
+      mergeMap((itemList: ItemDto[]): Observable<ItemDto> => {
+        return from(itemList);
+      }),
+      mergeMap((item: ItemDto): Observable<[ItemDto, boolean, Date]> => {
+        return combineLatest([
+          of(item),
+          this.isLoggable(item, ItemLogTypeDto.DoneToday),
+          this.itemLogList(item).pipe(
+            map((itemLogList: ItemLogDto[]): Date => {
+              return itemLogList.reduce((previousValue: Date, currentValue: ItemLogDto): Date => {
+                  if (currentValue.createdAt !== null && previousValue.getTime() < currentValue.createdAt.getTime()) {
+                    return currentValue.createdAt;
+                  }
+                  return previousValue;
+              }, new Date(0));
+            }),
+          ),
+        ]);
+      }),
+      filter((value: [ItemDto, boolean, Date]): boolean => {
+        return value[1];
+      }),
+      toArray<[ItemDto, boolean, Date]>(),
+      map((value: [ItemDto, boolean, Date][]): ItemDto[] => {
+        return value.sort((a: [ItemDto, boolean, Date], b: [ItemDto, boolean, Date]): number => {
+          return a[2].getTime() - b[2].getTime();
+        }).map((v: [ItemDto, boolean, Date]): ItemDto => {
+          return v[0];
+        }).slice(0, 3);
+      }),
+    );
   }
 
   public isLoggable(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
