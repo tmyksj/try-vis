@@ -53,6 +53,7 @@ import { PartItemListComponent } from "./components/part-item-list/part-item-lis
       { path: "items/new", component: PageItemEditComponent },
       { path: "items/:id", component: PageItemComponent },
       { path: "items/:id/edit", component: PageItemEditComponent },
+      { path: "**", component: PageErrorComponent },
     ]),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
