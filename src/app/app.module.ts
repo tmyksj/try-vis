@@ -15,6 +15,7 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { AppComponent } from "./components/app/app.component";
 import { LayoutMainComponent } from "./components/layout-main/layout-main.component";
+import { PageErrorComponent } from "./components/page-error/page-error.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from "./components/page-item/page-item.component";
 import { PageItemEditComponent } from "./components/page-item-edit/page-item-edit.component";
@@ -28,6 +29,7 @@ import { PartItemListComponent } from "./components/part-item-list/part-item-lis
   declarations: [
     AppComponent,
     LayoutMainComponent,
+    PageErrorComponent,
     PageHomeComponent,
     PageItemComponent,
     PageItemEditComponent,
@@ -51,6 +53,7 @@ import { PartItemListComponent } from "./components/part-item-list/part-item-lis
       { path: "items/new", component: PageItemEditComponent },
       { path: "items/:id", component: PageItemComponent },
       { path: "items/:id/edit", component: PageItemEditComponent },
+      { path: "**", component: PageErrorComponent },
     ]),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
