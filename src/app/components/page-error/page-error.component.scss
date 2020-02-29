@@ -1,0 +1,16 @@
+div {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 50vh;
+
+  mat-icon {
+    font-size: 2rem;
+    height: 2rem;
+    width: 2rem;
+  }
+
+  p {
+    margin: 0 0 0 1rem;
+  }
+}
