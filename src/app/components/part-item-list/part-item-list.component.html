@@ -1,1 +1,7 @@
-<p>part-item-list works!</p>
+<a *ngFor="let item of itemList"
+   class="item"
+   mat-stroked-button
+   routerLink="/items/{{ item.id }}">
+  <h2>{{ item.title }}</h2>
+  <p>{{ item.description }}</p>
+</a>
