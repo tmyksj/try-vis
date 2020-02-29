@@ -13,6 +13,7 @@ export class PartItemListComponent implements OnInit {
   public itemList: ItemDto[];
 
   public constructor() {
+    this.itemList = [];
   }
 
   public ngOnInit(): void {
