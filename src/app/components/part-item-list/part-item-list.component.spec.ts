@@ -1,16 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PartItemListComponent } from './part-item-list.component';
+import { PartItemListComponent } from "./part-item-list.component";
 
-describe('PartItemListComponent', () => {
+describe("PartItemListComponent", () => {
+
   let component: PartItemListComponent;
   let fixture: ComponentFixture<PartItemListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartItemListComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        PartItemListComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +21,8 @@ describe('PartItemListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
+
 });

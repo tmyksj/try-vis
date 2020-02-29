@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-part-item-list',
-  templateUrl: './part-item-list.component.html',
-  styleUrls: ['./part-item-list.component.scss']
+  selector: "app-part-item-list",
+  styleUrls: ["./part-item-list.component.scss"],
+  templateUrl: "./part-item-list.component.html",
 })
 export class PartItemListComponent implements OnInit {
 
-  constructor() { }
+  public constructor() {
+  }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
 }
