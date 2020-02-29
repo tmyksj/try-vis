@@ -2,24 +2,24 @@ import { Injectable } from "@angular/core";
 import { combineLatest, forkJoin, from, Observable, ObservableInput, of, throwError } from "rxjs";
 import { filter, map, mergeMap, startWith, toArray } from "rxjs/operators";
 
-import { Db } from "../../db/db";
 import { ItemDto } from "../../dtos/item/item.dto";
 import { ItemLogDto } from "../../dtos/item-log/item-log.dto";
 import { ItemLogTypeDto } from "../../dtos/item-log-type/item-log-type.dto";
+import { IndexedDbInfrastructure } from "../../infrastructures/indexed-db/indexed-db.infrastructure";
 
 @Injectable({
   providedIn: "root",
 })
 export class ItemDomain {
 
-  private db: Db;
+  private indexedDb: IndexedDbInfrastructure;
 
-  public constructor(db: Db) {
-    this.db = db;
+  public constructor(indexedDb: IndexedDbInfrastructure) {
+    this.indexedDb = indexedDb;
   }
 
   public accumulateSteps(): Observable<number> {
-    return this.db.itemLogRepository.findAll().pipe(
+    return this.indexedDb.itemLogRepository.findAll().pipe(
       map((itemLogList: ItemLogDto[]): number => {
         return itemLogList.map((itemLog: ItemLogDto): number => {
           switch (itemLog.type) {
@@ -30,7 +30,7 @@ export class ItemDomain {
             default:
               return 0;
           }
-        }).reduce((previousValue, currentValue) => {
+        }).reduce((previousValue: number, currentValue: number): number => {
           return previousValue + currentValue;
         }, 0);
       }),
@@ -106,8 +106,8 @@ export class ItemDomain {
     }
 
     return forkJoin([
-      this.db.itemRepository.deleteById(item.id),
-      this.db.itemLogRepository.findAll().pipe(
+      this.indexedDb.itemRepository.deleteById(item.id),
+      this.indexedDb.itemLogRepository.findAll().pipe(
         mergeMap((itemLogList: ItemLogDto[]): ObservableInput<ItemLogDto> => {
           return from(itemLogList);
         }),
@@ -115,7 +115,7 @@ export class ItemDomain {
           return item.id === itemLog.itemId;
         }),
         mergeMap((itemLog: ItemLogDto): ObservableInput<void> => {
-          return this.db.itemLogRepository.deleteById(itemLog.id);
+          return this.indexedDb.itemLogRepository.deleteById(itemLog.id);
         }),
         startWith("emit least one item"),
       ),
@@ -132,15 +132,15 @@ export class ItemDomain {
       return throwError(new Error("item.id and itemLog.itemId does not match"));
     }
 
-    return this.db.itemLogRepository.deleteById(itemLog.id);
+    return this.indexedDb.itemLogRepository.deleteById(itemLog.id);
   }
 
   public item(id: number): Observable<ItemDto | null> {
-    return this.db.itemRepository.findById(id);
+    return this.indexedDb.itemRepository.findById(id);
   }
 
   public itemList(): Observable<ItemDto[]> {
-    return this.db.itemRepository.findAll();
+    return this.indexedDb.itemRepository.findAll();
   }
 
   public itemLog(item: ItemDto, id: number): Observable<ItemLogDto | null> {
@@ -148,7 +148,7 @@ export class ItemDomain {
       return throwError(new Error("item.id must not be null"));
     }
 
-    return this.db.itemLogRepository.findById(id).pipe(map((itemLog: ItemLogDto | null): ItemLogDto | null => {
+    return this.indexedDb.itemLogRepository.findById(id).pipe(map((itemLog: ItemLogDto | null): ItemLogDto | null => {
       if (itemLog === null || item.id !== itemLog.id) {
         return null;
       }
@@ -161,7 +161,7 @@ export class ItemDomain {
       return throwError(new Error("item.id must not be null"));
     }
 
-    return this.db.itemLogRepository.findAll().pipe(map((itemLogList: ItemLogDto[]): ItemLogDto[] => {
+    return this.indexedDb.itemLogRepository.findAll().pipe(map((itemLogList: ItemLogDto[]): ItemLogDto[] => {
       return itemLogList.filter((itemLog: ItemLogDto) => {
         return item.id === itemLog.itemId;
       });
@@ -169,7 +169,7 @@ export class ItemDomain {
   }
 
   public save(item: ItemDto): Observable<ItemDto> {
-    return this.db.itemRepository.save(item);
+    return this.indexedDb.itemRepository.save(item);
   }
 
   public saveLog(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<void> {
@@ -177,7 +177,7 @@ export class ItemDomain {
       return throwError(new Error("item.id must not be null"));
     }
 
-    return this.db.itemLogRepository.save({
+    return this.indexedDb.itemLogRepository.save({
       id: null,
       itemId: item.id,
       type: itemLogType,

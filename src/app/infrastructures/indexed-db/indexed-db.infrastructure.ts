@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
+import Dexie from "dexie";
 import { defer, from, Observable, ObservableInput } from "rxjs";
 import { map, mergeMap } from "rxjs/operators";
-import Dexie from "dexie";
 
-import { ItemDto } from "../dtos/item/item.dto";
-import { ItemLogDto } from "../dtos/item-log/item-log.dto";
+import { ItemDto } from "../../dtos/item/item.dto";
+import { ItemLogDto } from "../../dtos/item-log/item-log.dto";
 
 @Injectable({
   providedIn: "root",
 })
-export class Db {
+export class IndexedDbInfrastructure {
 
   public readonly itemRepository: Repository<ItemDto>;
 
@@ -31,7 +31,7 @@ export class Db {
   }
 
   private newRepository<T>(tableName: string, attrs: string[]): Repository<T> {
-    const self: Db = this;
+    const self: IndexedDbInfrastructure = this;
 
     const db2dto = (db: any): any => {
       return attrs.concat(["id"]).reduce((v: any, attr: string): any => {
