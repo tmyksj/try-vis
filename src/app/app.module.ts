@@ -19,6 +19,7 @@ import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from "./components/page-item/page-item.component";
 import { PageItemEditComponent } from "./components/page-item-edit/page-item-edit.component";
 import { PageItemListComponent } from "./components/page-item-list/page-item-list.component";
+import { PartItemListComponent } from "./components/part-item-list/part-item-list.component";
 
 @NgModule({
   bootstrap: [
@@ -31,6 +32,7 @@ import { PageItemListComponent } from "./components/page-item-list/page-item-lis
     PageItemComponent,
     PageItemEditComponent,
     PageItemListComponent,
+    PartItemListComponent,
   ],
   imports: [
     BrowserAnimationsModule,

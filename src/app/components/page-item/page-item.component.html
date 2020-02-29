@@ -28,13 +28,16 @@
 
     <mat-divider></mat-divider>
 
-    <div class="title">
-      <h1>{{ item.title }}</h1>
+    <div class="action">
       <a mat-stroked-button
          routerLink="/items/{{ item.id }}/edit">編集</a>
       <button (click)="onClickDelete()"
               color="warn"
               mat-stroked-button>削除</button>
+    </div>
+
+    <div class="title">
+      <h1>{{ item.title }}</h1>
     </div>
 
     <div class="description">

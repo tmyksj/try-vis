@@ -5,13 +5,8 @@
   <mat-divider></mat-divider>
 
   <h1>推薦されたリスト</h1>
-  <a *ngFor="let item of recommendedItemList"
-     class="item"
-     mat-stroked-button
-     routerLink="/items/{{ item.id }}">
-    <h2>{{ item.title }}</h2>
-    <p>{{ item.description }}</p>
-  </a>
+  <app-part-item-list [itemList]="recommendedItemList"></app-part-item-list>
+
   <a class="add"
      color="primary"
      mat-fab
