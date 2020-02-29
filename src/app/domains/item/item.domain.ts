@@ -30,7 +30,7 @@ export class ItemDomain {
             default:
               return 0;
           }
-        }).reduce((previousValue, currentValue) => {
+        }).reduce((previousValue: number, currentValue: number): number => {
           return previousValue + currentValue;
         }, 0);
       }),
