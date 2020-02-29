@@ -15,12 +15,12 @@ import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { AppComponent } from "./components/app/app.component";
 import { LayoutMainComponent } from "./components/layout-main/layout-main.component";
+import { PageErrorComponent } from "./components/page-error/page-error.component";
 import { PageHomeComponent } from "./components/page-home/page-home.component";
 import { PageItemComponent } from "./components/page-item/page-item.component";
 import { PageItemEditComponent } from "./components/page-item-edit/page-item-edit.component";
 import { PageItemListComponent } from "./components/page-item-list/page-item-list.component";
 import { PartItemListComponent } from "./components/part-item-list/part-item-list.component";
-import { PageErrorComponent } from './components/page-error/page-error.component';
 
 @NgModule({
   bootstrap: [
@@ -29,12 +29,12 @@ import { PageErrorComponent } from './components/page-error/page-error.component
   declarations: [
     AppComponent,
     LayoutMainComponent,
+    PageErrorComponent,
     PageHomeComponent,
     PageItemComponent,
     PageItemEditComponent,
     PageItemListComponent,
     PartItemListComponent,
-    PageErrorComponent,
   ],
   imports: [
     BrowserAnimationsModule,
