@@ -2,6 +2,6 @@
    class="item"
    mat-stroked-button
    routerLink="/items/{{ item.id }}">
-  <h2>{{ item.title }}</h2>
-  <p>{{ item.description }}</p>
+  <h2>{{ item.title || "（タイトルなし）" }}</h2>
+  <p>{{ item.description || "（詳細なし）" }}</p>
 </a>
