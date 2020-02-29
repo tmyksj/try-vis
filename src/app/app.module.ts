@@ -20,6 +20,7 @@ import { PageItemComponent } from "./components/page-item/page-item.component";
 import { PageItemEditComponent } from "./components/page-item-edit/page-item-edit.component";
 import { PageItemListComponent } from "./components/page-item-list/page-item-list.component";
 import { PartItemListComponent } from "./components/part-item-list/part-item-list.component";
+import { PageErrorComponent } from './components/page-error/page-error.component';
 
 @NgModule({
   bootstrap: [
@@ -33,6 +34,7 @@ import { PartItemListComponent } from "./components/part-item-list/part-item-lis
     PageItemEditComponent,
     PageItemListComponent,
     PartItemListComponent,
+    PageErrorComponent,
   ],
   imports: [
     BrowserAnimationsModule,
