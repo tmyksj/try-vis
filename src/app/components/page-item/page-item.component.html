@@ -37,11 +37,11 @@
     </div>
 
     <div class="title">
-      <h1>{{ item.title }}</h1>
+      <h1>{{ item.title || "（タイトルなし）" }}</h1>
     </div>
 
     <div class="description">
-      <p>{{ item.description }}</p>
+      <p>{{ item.description || "（詳細なし）" }}</p>
     </div>
 
     <div class="log">
