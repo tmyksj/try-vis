@@ -7,6 +7,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
@@ -47,6 +48,7 @@ import { PartItemListComponent } from "./components/part-item-list/part-item-lis
     MatListModule,
     MatTabsModule,
     MatToolbarModule,
+    MatTooltipModule,
     RouterModule.forRoot([
       { path: "", component: PageHomeComponent },
       { path: "items", component: PageItemListComponent },
