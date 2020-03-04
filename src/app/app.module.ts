@@ -52,6 +52,7 @@ import { PartItemListComponent } from "./components/part-item-list/part-item-lis
     RouterModule.forRoot([
       { path: "", component: PageHomeComponent },
       { path: "items", component: PageItemListComponent },
+      { path: "items/activity", component: PageItemListComponent },
       { path: "items/new", component: PageItemEditComponent },
       { path: "items/:id", component: PageItemComponent },
       { path: "items/:id/edit", component: PageItemEditComponent },

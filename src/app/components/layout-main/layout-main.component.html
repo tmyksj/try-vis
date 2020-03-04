@@ -9,10 +9,22 @@
 <nav *ngIf="navEnabled"
      class="mat-tab-group-inverted-header"
      mat-tab-nav-bar>
-  <a [active]="navActiveLink == '/'"
-     mat-tab-link
-     routerLink="/">ホーム</a>
-  <a [active]="navActiveLink == '/items'"
-     mat-tab-link
-     routerLink="/items">やってみたいことリスト</a>
+  <a [active]="url == '/'"
+    matTooltip="ホーム"
+    mat-tab-link
+    routerLink="/">
+    <mat-icon>home</mat-icon>
+  </a>
+  <a [active]="url == '/items'"
+    matTooltip="やってみたいことリスト"
+    mat-tab-link
+    routerLink="/items">
+    <mat-icon>list</mat-icon>
+  </a>
+  <a [active]="url == '/items/activity'"
+    matTooltip="これまでの履歴"
+    mat-tab-link
+    routerLink="/items/activity">
+    <mat-icon>history</mat-icon>
+  </a>
 </nav>

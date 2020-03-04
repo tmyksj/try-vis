@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 import { ItemDomain } from "../../domains/item/item.domain";
 import { ItemDto } from "../../dtos/item/item.dto";
@@ -10,16 +12,30 @@ import { ItemDto } from "../../dtos/item/item.dto";
 })
 export class PageItemListComponent implements OnInit {
 
+  public isActivityMode: boolean;
+
   public itemList: ItemDto[];
 
   private itemDomain: ItemDomain;
 
-  public constructor(itemDomain: ItemDomain) {
+  private router: Router;
+
+  public constructor(itemDomain: ItemDomain, router: Router) {
     this.itemDomain = itemDomain;
+    this.router = router;
   }
 
   public ngOnInit(): void {
-    this.itemDomain.itemList().subscribe((itemList: ItemDto[]): void => {
+    this.isActivityMode = this.router.url.includes("activity");
+
+    let itemListObservable: Observable<ItemDto[]> | undefined;
+    if (this.isActivityMode) {
+      itemListObservable = this.itemDomain.itemList();
+    } else {
+      itemListObservable = this.itemDomain.pickupCurrentItemList();
+    }
+
+    itemListObservable.subscribe((itemList: ItemDto[]): void => {
       this.itemList = itemList.sort((a: ItemDto, b: ItemDto): number => {
         return b.id - a.id;
       });

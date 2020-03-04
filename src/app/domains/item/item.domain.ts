@@ -37,6 +37,27 @@ export class ItemDomain {
     );
   }
 
+  public pickupCurrentItemList(): Observable<ItemDto[]> {
+    return this.itemList().pipe(
+      mergeMap((itemList: ItemDto[]): Observable<ItemDto> => {
+        return from(itemList);
+      }),
+      mergeMap((item: ItemDto): Observable<[ItemDto, boolean]> => {
+        return combineLatest([
+          of(item),
+          this.isLoggable(item, ItemLogTypeDto.DoneToday),
+        ]);
+      }),
+      filter((value: [ItemDto, boolean]): boolean => {
+        return value[1];
+      }),
+      map((value: [ItemDto, boolean]): ItemDto => {
+        return value[0];
+      }),
+      toArray(),
+    );
+  }
+
   public pickupRecommendedItemList(): Observable<ItemDto[]> {
     return this.itemList().pipe(
       mergeMap((itemList: ItemDto[]): Observable<ItemDto> => {
