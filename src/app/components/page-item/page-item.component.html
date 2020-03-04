@@ -3,24 +3,28 @@
     <div class="action">
       <button [disabled]="!isLoggableLater"
               (click)="onClickLog(refItemLogTypeDto.Later)"
+              matTooltip="あとまわし"
               mat-stroked-button>
         <mat-icon>repeat</mat-icon>
       </button>
       <button [disabled]="!isLoggableDoneToday"
               (click)="onClickLog(refItemLogTypeDto.DoneToday)"
               color="primary"
+              matTooltip="今日はおわり"
               mat-stroked-button>
         <mat-icon>done</mat-icon>
       </button>
       <button [disabled]="!isLoggableDone"
               (click)="onClickLog(refItemLogTypeDto.Done)"
               color="primary"
+              matTooltip="すべておわり"
               mat-stroked-button>
         <mat-icon>done_all</mat-icon>
       </button>
       <button [disabled]="!isLoggableQuit"
               (click)="onClickLog(refItemLogTypeDto.Quit)"
               color="warn"
+              matTooltip="取りやめ"
               mat-stroked-button>
         <mat-icon>close</mat-icon>
       </button>
@@ -49,12 +53,16 @@
       <mat-list>
         <mat-list-item *ngFor="let itemLog of itemLogList">
           <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Later"
+                    matTooltip="あとまわし"
                     mat-list-icon>repeat</mat-icon>
           <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.DoneToday"
+                    matTooltip="今日はおわり"
                     mat-list-icon>done</mat-icon>
           <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Done"
+                    matTooltip="すべておわり"
                     mat-list-icon>done_all</mat-icon>
           <mat-icon *ngIf="itemLog.type === refItemLogTypeDto.Quit"
+                    matTooltip="取りやめ"
                     mat-list-icon>close</mat-icon>
           <p mat-line>{{ itemLog.createdAt | date:"yyyy/MM/dd HH:mm" }}</p>
         </mat-list-item>
