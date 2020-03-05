@@ -45,7 +45,7 @@ export class ItemDomain {
       mergeMap((item: ItemDto): Observable<[ItemDto, boolean]> => {
         return combineLatest([
           of(item),
-          this.isLoggable(item, ItemLogTypeDto.DoneToday),
+          this.isLoggable(item, ItemLogTypeDto.Done),
         ]);
       }),
       filter((value: [ItemDto, boolean]): boolean => {
