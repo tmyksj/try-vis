@@ -38,7 +38,7 @@ export class ItemDomain {
   }
 
   public pickupCurrentItemList(): Observable<ItemDto[]> {
-    return this.itemList().pipe(
+    return this.indexedDb.itemRepository.findAll().pipe(
       mergeMap((itemList: ItemDto[]): Observable<ItemDto> => {
         return from(itemList);
       }),
@@ -59,7 +59,7 @@ export class ItemDomain {
   }
 
   public pickupRecommendedItemList(): Observable<ItemDto[]> {
-    return this.itemList().pipe(
+    return this.indexedDb.itemRepository.findAll().pipe(
       mergeMap((itemList: ItemDto[]): Observable<ItemDto> => {
         return from(itemList);
       }),
