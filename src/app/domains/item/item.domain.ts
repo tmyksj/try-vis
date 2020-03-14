@@ -18,18 +18,52 @@ export class ItemDomain {
     this.indexedDb = indexedDb;
   }
 
+  public accumulateDailyStepsIntegrally(): Observable<[Date, number][]> {
+    return this.indexedDb.itemLogRepository.findAll().pipe(
+      map((itemLogList: ItemLogDto[]) => {
+        return Array.from(itemLogList
+          .reduce((previousValue: Map<number, number>, currentValue: ItemLogDto): Map<number, number> => {
+            if (currentValue.createdAt !== null) {
+              const y: number = currentValue.createdAt.getFullYear();
+              const m: number = currentValue.createdAt.getMonth();
+              const d: number = currentValue.createdAt.getDate();
+              const key: number = new Date(y, m, d).getTime();
+              const val: number | undefined = previousValue.get(key);
+              const steps: number = this.itemLogToSteps(currentValue);
+
+              if (val === undefined) {
+                previousValue.set(key, steps);
+              } else {
+                previousValue.set(key, val + steps);
+              }
+            }
+            return previousValue;
+          }, new Map()).entries()
+        ).sort((a: [number, number], b: [number, number]): number => {
+          return a[0] - b[0];
+        }).reduce((previousValue: [Date, number][], currentValue: [number, number]): [Date, number][] => {
+          if (previousValue.length === 0) {
+            previousValue.push([
+              new Date(currentValue[0]),
+              currentValue[1],
+            ]);
+          } else {
+            previousValue.push([
+              new Date(currentValue[0]),
+              currentValue[1] + previousValue[previousValue.length - 1][1],
+            ]);
+          }
+          return previousValue;
+        }, []);
+      }),
+    );
+  }
+
   public accumulateSteps(): Observable<number> {
     return this.indexedDb.itemLogRepository.findAll().pipe(
       map((itemLogList: ItemLogDto[]): number => {
         return itemLogList.map((itemLog: ItemLogDto): number => {
-          switch (itemLog.type) {
-            case ItemLogTypeDto.DoneToday:
-              return 1;
-            case ItemLogTypeDto.Done:
-              return 2;
-            default:
-              return 0;
-          }
+          return this.itemLogToSteps(itemLog);
         }).reduce((previousValue: number, currentValue: number): number => {
           return previousValue + currentValue;
         }, 0);
@@ -70,10 +104,10 @@ export class ItemDomain {
           this.itemLogList(item).pipe(
             map((itemLogList: ItemLogDto[]): Date => {
               return itemLogList.reduce((previousValue: Date, currentValue: ItemLogDto): Date => {
-                  if (currentValue.createdAt !== null && previousValue.getTime() < currentValue.createdAt.getTime()) {
-                    return currentValue.createdAt;
-                  }
-                  return previousValue;
+                if (currentValue.createdAt !== null && previousValue.getTime() < currentValue.createdAt.getTime()) {
+                  return currentValue.createdAt;
+                }
+                return previousValue;
               }, new Date(0));
             }),
           ),
@@ -96,7 +130,7 @@ export class ItemDomain {
   public isLoggable(item: ItemDto, itemLogType: ItemLogTypeDto): Observable<boolean> {
     switch (itemLogType) {
       case ItemLogTypeDto.Later:
-        // fall through
+      // fall through
       case ItemLogTypeDto.DoneToday:
         return forkJoin([
           this.isLoggedSinceToday(item, ItemLogTypeDto.DoneToday),
@@ -108,7 +142,7 @@ export class ItemDomain {
           }),
         );
       case ItemLogTypeDto.Done:
-        // fall through
+      // fall through
       case ItemLogTypeDto.Quit:
         return forkJoin([
           this.isLogged(item, ItemLogTypeDto.Done),
@@ -230,6 +264,17 @@ export class ItemDomain {
         }) !== undefined;
       }),
     );
+  }
+
+  private itemLogToSteps(itemLog: ItemLogDto): number {
+    switch (itemLog.type) {
+      case ItemLogTypeDto.DoneToday:
+        return 1;
+      case ItemLogTypeDto.Done:
+        return 2;
+      default:
+        return 0;
+    }
   }
 
 }
