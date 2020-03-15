@@ -3,9 +3,17 @@ h1 {
 }
 
 .steps {
-  font: 400 24px/32px Roboto, "Helvetica Neue", sans-serif;
-  margin: 4rem 0;
-  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+
+  p {
+    background: #ffffff;
+    box-shadow: 0 0 1rem 0.5rem #ffffff;
+    font: 400 24px/32px Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0.5rem;
+    position: absolute;
+  }
 }
 
 .add {
@@ -15,5 +23,5 @@ h1 {
 }
 
 mat-divider {
-  margin: 4rem 0;
+  margin: 3rem 0 4rem;
 }
